@@ -8,6 +8,8 @@ import { View, TextInput, Logo, Button, FormErrorMessage } from "../components";
 import { Images, Colors, auth } from "../config";
 import { useTogglePasswordVisibility } from "../hooks";
 import { signupValidationSchema } from "../utils";
+import { db } from "../config/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 export const SignupScreen = ({ navigation }) => {
   const [errorState, setErrorState] = useState("");
@@ -21,14 +23,22 @@ export const SignupScreen = ({ navigation }) => {
     confirmPasswordVisibility,
   } = useTogglePasswordVisibility();
 
+
   const handleSignup = async (values) => {
-    const { email, password } = values;
+    const { email, password, username } = values;
   
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log("✅ 注册成功，用户信息：", user);
-      
+  
+      // 将用户名写入 Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        username: username,
+        email: email,
+        createdAt: new Date()
+      });
+  
     } catch (error) {
       console.error("❌ 注册失败：", error.message);
       setErrorState(error.message);
@@ -45,10 +55,12 @@ export const SignupScreen = ({ navigation }) => {
         {/* Formik Wrapper */}
         <Formik
           initialValues={{
+            username: "",
             email: "",
             password: "",
             confirmPassword: "",
           }}
+          
           validationSchema={signupValidationSchema}
           onSubmit={(values) => handleSignup(values)}
         >
@@ -63,13 +75,24 @@ export const SignupScreen = ({ navigation }) => {
             <>
               {/* Input fields */}
               <TextInput
+                name="username"
+                leftIconName="account"
+                placeholder="Enter username"
+                autoCapitalize="none"
+                value={values.username}
+                autoFocus={true}
+                onChangeText={handleChange("username")}
+                onBlur={handleBlur("username")}
+              />
+              <FormErrorMessage error={errors.username} visible={touched.username} />
+
+              <TextInput
                 name="email"
                 leftIconName="email"
                 placeholder="Enter email"
                 autoCapitalize="none"
                 keyboardType="email-address"
                 textContentType="emailAddress"
-                autoFocus={true}
                 value={values.email}
                 onChangeText={handleChange("email")}
                 onBlur={handleBlur("email")}

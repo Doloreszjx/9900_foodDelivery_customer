@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { AuthStack } from "./AuthStack";
-import { AppStack } from "./AppStack";
+import { AppStack } from "./AppNavigator";
 import { AuthenticatedUserContext } from "../providers";
 import { LoadingIndicator } from "../components";
 import { auth } from "../config";
@@ -24,7 +24,7 @@ export const RootNavigator = () => {
 
     // unsubscribe auth listener on unmount
     return unsubscribeAuthStateChanged;
-  }, [user]);
+  }, []); // Remove 'user' from dependency array
 
   if (isLoading) {
     return <LoadingIndicator />;

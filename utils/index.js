@@ -6,6 +6,9 @@ export const loginValidationSchema = Yup.object().shape({
 });
 
 export const signupValidationSchema = Yup.object().shape({
+  username: Yup.string()
+  .min(3, "Username must be at least 3 characters").label('Username')
+  .required("Username is required"),
   email: Yup.string().required().email().label('Email'),
   password: Yup.string().required().min(6).label('Password'),
   confirmPassword: Yup.string()
