@@ -28,9 +28,7 @@ export const SignupScreen = ({ navigation }) => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log("✅ 注册成功，用户信息：", user);
-  
-      // 👉 注册成功后，用户会自动登录，onAuthStateChanged 会触发
-      // 如果你想跳转页面，也可以在这里执行
+      
     } catch (error) {
       console.error("❌ 注册失败：", error.message);
       setErrorState(error.message);
