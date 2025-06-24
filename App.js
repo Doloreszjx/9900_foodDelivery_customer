@@ -1,21 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import TabNavigator from './navigation/TabNavigator';
+import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-export default function App() {
+import { RootNavigator } from "./navigation/RootNavigator";
+import { AuthenticatedUserProvider } from "./providers";
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-          <TabNavigator />
-      </NavigationContainer>
-    </View>
+    <AuthenticatedUserProvider>
+      <SafeAreaProvider>
+        <RootNavigator />
+      </SafeAreaProvider>
+    </AuthenticatedUserProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+export default App;
