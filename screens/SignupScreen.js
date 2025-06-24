@@ -23,10 +23,18 @@ export const SignupScreen = ({ navigation }) => {
 
   const handleSignup = async (values) => {
     const { email, password } = values;
-
-    createUserWithEmailAndPassword(auth, email, password).catch((error) =>
-      setErrorState(error.message)
-    );
+  
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      console.log("✅ 注册成功，用户信息：", user);
+  
+      // 👉 注册成功后，用户会自动登录，onAuthStateChanged 会触发
+      // 如果你想跳转页面，也可以在这里执行
+    } catch (error) {
+      console.error("❌ 注册失败：", error.message);
+      setErrorState(error.message);
+    }
   };
 
   return (
@@ -34,8 +42,7 @@ export const SignupScreen = ({ navigation }) => {
       <KeyboardAwareScrollView enableOnAndroid={true}>
         {/* LogoContainer: consist app logo and screen title */}
         <View style={styles.logoContainer}>
-          <Logo uri={Images.logo} />
-          <Text style={styles.screenTitle}>Create a new account!</Text>
+          <Text style={styles.screenTitle}>Registration</Text>
         </View>
         {/* Formik Wrapper */}
         <Formik
@@ -112,7 +119,7 @@ export const SignupScreen = ({ navigation }) => {
               ) : null}
               {/* Signup button */}
               <Button style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Signup</Text>
+                <Text style={styles.buttonText}>Register</Text>
               </Button>
             </>
           )}
@@ -141,17 +148,17 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 32,
     fontWeight: "700",
-    color: Colors.black,
-    paddingTop: 20,
+    color: "#FF6347",
+    padding: 32,
   },
   button: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
-    backgroundColor: Colors.orange,
-    padding: 10,
-    borderRadius: 8,
+    backgroundColor: "#FF6347",
+    padding: 16,
+    borderRadius: 28,
   },
   buttonText: {
     fontSize: 20,

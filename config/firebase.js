@@ -1,24 +1,17 @@
-import { initializeApp } from "firebase/app";
-import { initializeAuth, getReactNativePersistence } from "firebase/auth";
-import Constants from "expo-constants";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
-// add firebase config
 const firebaseConfig = {
-  apiKey: Constants.expoConfig?.extra?.apiKey,
-  authDomain: Constants.expoConfig?.extra?.authDomain,
-  projectId: Constants.expoConfig?.extra?.projectId,
-  storageBucket: Constants.expoConfig?.extra?.storageBucket,
-  messagingSenderId: Constants.expoConfig?.extra?.messagingSenderId,
-  appId: Constants.expoConfig?.extra?.appId,
+  apiKey: 'AIzaSyCdWmOJlmAsQQwCk5eSpXX1kDtDT7OhFqA',
+  authDomain: 'fooddelivery-4a4e2.firebaseapp.com',
+  projectId: 'fooddelivery-4a4e2',
+  storageBucket: 'fooddelivery-4a4e2.firebasestorage.app',
+  messagingSenderId: '36482461925',
+  appId: '1:36482461925:web:a953cf24bc5056e07be40c',
 };
 
-// initialize firebase
-const app = initializeApp(firebaseConfig);
-
-// initialize auth; only for native platforms (Android and iOS)
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+// ✅ 防止重复初始化
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const auth = getAuth(app);
 
 export { auth };

@@ -24,10 +24,9 @@ export const LoginScreen = ({ navigation }) => {
     <>
       <View isSafe style={styles.container}>
         <KeyboardAwareScrollView enableOnAndroid={true}>
-          {/* LogoContainer: consist app logo and screen title */}
+          {/* LogoContainer: screen title */}
           <View style={styles.logoContainer}>
-            <Logo uri={Images.logo} />
-            <Text style={styles.screenTitle}>Welcome back1212</Text>
+            <Text style={styles.screenTitle}>Login</Text>
           </View>
           <Formik
             initialValues={{
@@ -107,11 +106,7 @@ export const LoginScreen = ({ navigation }) => {
           />
         </KeyboardAwareScrollView>
       </View>
-
-      {/* App info footer */}
-      {/* <View style={styles.footer}>
-        <Text style={styles.footerText}>Expo Firebase Starter App</Text>
-      </View> */}
+      
     </>
   );
 };
@@ -128,28 +123,18 @@ const styles = StyleSheet.create({
   screenTitle: {
     fontSize: 32,
     fontWeight: "700",
-    color: Colors.black,
-    paddingTop: 20,
+    color: "#FF6347",
+    padding: 32,
   },
-  footer: {
-    backgroundColor: Colors.white,
-    paddingHorizontal: 12,
-    paddingBottom: 48,
-    alignItems: "center",
-  },
-  footerText: {
-    fontSize: 14,
-    fontWeight: "700",
-    color: Colors.orange,
-  },
+  
   button: {
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     marginTop: 8,
-    backgroundColor: Colors.orange,
-    padding: 10,
-    borderRadius: 8,
+    backgroundColor: "#FF6347",
+    padding: 16,
+    borderRadius: 28,
   },
   buttonText: {
     fontSize: 20,
