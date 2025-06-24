@@ -109,9 +109,9 @@ export const LoginScreen = ({ navigation }) => {
       </View>
 
       {/* App info footer */}
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <Text style={styles.footerText}>Expo Firebase Starter App</Text>
-      </View>
+      </View> */}
     </>
   );
 };
